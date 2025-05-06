@@ -20,7 +20,10 @@ sudo apt install act
 
 # 启动一个监听 POST 请求的本地服务器
 cd ci-cd-injection-demo
-python3 -m http.server 8000
+python -m http.server 8000 --bind 0.0.0.0
+
+# 攻击
+act workflow_dispatch -P ubuntu-latest=node:20-bullseye -s MY_SECRET=TOP_SECRET_123 -e event.json
 
 # 正常情况
 act workflow_dispatch -s MY_SECRET=TOP_SECRET_123

