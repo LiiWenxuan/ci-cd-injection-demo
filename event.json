@@ -1,0 +1,6 @@
+{
+    "inputs": {
+      "username": "normaluser && curl http://localhost:8000/pwned"
+    }
+  }
+  
